@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :tasks, except: %i[new edit], param: :slug
     resources :users, only: %i[index create]
     resource :sessions, only: :create
+    resource :sessions, only: %i[create destroy]
   end
 
   root "home#index"
