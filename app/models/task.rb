@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  RESTRICTED_ATTRIBUTES = %i[title user_id]
+
+  belongs_to :user
+  has_many :comments, dependent: :destroy
+  enum progress: { pending: 0, completed: 1 }
+
   validates :title, presence: true, length: { maximum: 50 }
   validates :slug, uniqueness: true
   validate :slug_not_changed
 
   before_create :set_slug
-  belongs_to :user
-
-  has_many :comments, dependent: :destroy
 
   private
 
