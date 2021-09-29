@@ -3,7 +3,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include Pundit
-
   rescue_from Pundit::NotAuthorizedError, with: :handle_unauthorized_user
 
   def authenticate_user_using_x_auth_token
@@ -18,19 +17,6 @@ class ApplicationController < ActionController::Base
       @current_user = user
     else
       render status: :unauthorized, json: { error: t("session.could_not_auth") }
-    end
-  end
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      scope.where(creator_id: user.id).or(scope.where(user_id: user.id))
     end
   end
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-vious code...
-
 class TasksController < ApplicationController
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
@@ -10,7 +8,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = policy_scope(Task)
-    render status: :ok, json: { tasks: tasks }
+    render status: :ok, json: { tasks: @tasks }
   end
 
   def create
