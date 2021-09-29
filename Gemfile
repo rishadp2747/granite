@@ -65,3 +65,5 @@ gem "react-rails"
 gem "simplecov", require: false, group: :test
 
 gem "pundit"
+
+gem "sidekiq"
