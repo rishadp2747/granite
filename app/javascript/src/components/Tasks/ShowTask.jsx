@@ -51,6 +51,11 @@ const ShowTask = () => {
         <span className="text-gray-600">Assigned To : </span>
         {task?.assigned_user.name}
       </h2>
+      <h2 className="pb-3 mb-3 text-md leading-5 text-bb-gray-600 text-opacity-50">
+        10 <span>Created By : </span>
+        11 {task?.task_creator}
+        12{" "}
+      </h2>
     </Container>
   );
 };
