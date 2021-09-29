@@ -52,9 +52,8 @@ const ShowTask = () => {
         {task?.assigned_user.name}
       </h2>
       <h2 className="pb-3 mb-3 text-md leading-5 text-bb-gray-600 text-opacity-50">
-        10 <span>Created By : </span>
-        11 {task?.task_creator}
-        12{" "}
+        <span>Created By : </span>
+        {task?.task_creator}{" "}
       </h2>
     </Container>
   );
