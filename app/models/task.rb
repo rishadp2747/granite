@@ -8,6 +8,8 @@ class Task < ApplicationRecord
   before_create :set_slug
   belongs_to :user
 
+  has_many :comments, dependent: :destroy
+
   private
 
     def set_slug
