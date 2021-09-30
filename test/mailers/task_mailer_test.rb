@@ -1,17 +1,24 @@
 # frozen_string_literal: true
 
-class TaskMailer < ApplicationMailer
-  after_action :create_user_notification
+require "test_helper"
 
-  def pending_tasks_email(receiver_id)
-    @receiver = User.find(receiver_id)
-    @tasks = @receiver.tasks.pending
-    mail(to: @receiver.email, subject: "Pending Tasks")
+class TaskMailerTest < ActionMailer::TestCase
+  def setup
+    @user = create(:user)
   end
 
-  private
+  def test_task_mailer_is_delivering_mails
+    email = TaskMailer.pending_tasks_email(@user.id).deliver_now
+    assert_not ActionMailer::Base.deliveries.empty?
+    assert_equal ["no-reply@granite.com"], email.from
+    assert_equal [@user.email], email.to
+    assert_equal "Pending Tasks", email.subject
+  end
 
-    def create_user_notification
-      @receiver.user_notifications.create(last_notification_sent_date: Time.zone.today)
-    end
+  def test_task_mailer_after_action_create_user_notifications
+    assert_equal 0, UserNotification.count
+    TaskMailer.pending_tasks_email(@user.id).deliver_now
+
+    assert_equal 1, UserNotification.count
+  end
 end

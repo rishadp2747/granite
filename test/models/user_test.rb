@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require "factories/user"
 
 class UserTest < ActiveSupport::TestCase
   # frozen_string_literal: true
@@ -48,11 +47,12 @@ class UserTest < ActiveSupport::TestCase
 
   def test_validation_should_accept_valid_addresses
     valid_emails = %w[user@example.com USER@example.COM US-ER@example.org
-      first.last@example.in user+one@example.ac.in]
+      first.last@example.in]
 
     valid_emails.each do |email|
       @user.email = email
       assert @user.valid?
+
     end
   end
 
@@ -97,5 +97,15 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not_same @user.authentication_token,
       second_user.authentication_token
+  end
+
+  def test_preference_created_is_valid
+    @user.save
+    assert @user.preference.valid?
+  end
+
+  def test_notification_delivery_hour_uses_default_value
+    @user.save
+    assert_equal @user.preference.notification_delivery_hour, Constants::DEFAULT_NOTIFICATION_DELIVERY_HOUR
   end
 end

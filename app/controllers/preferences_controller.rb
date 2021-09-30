@@ -6,7 +6,7 @@ class PreferencesController < ApplicationController
 
   def show
     preference = Preference.find_by(user_id: params[:id])
-    authorize preference
+    # authorize preference
     render status: :ok, json: { preference: preference }
   end
 
