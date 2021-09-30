@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Authorizable
   protect_from_forgery with: :exception
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :handle_unauthorized_user
