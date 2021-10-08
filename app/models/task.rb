@@ -13,6 +13,7 @@ class Task < ApplicationRecord
   validate :slug_not_changed
 
   before_create :set_slug
+  after_commit :log_task_details, on: :create
 
   private
 
